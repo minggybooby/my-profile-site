@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JIHOON KIM - Software Development Manager</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Color Variables */
+        :root {
+            --bg-dark: #0f0c1e;
+            --bg-about: #13102b;
+            --cyan: #00f5ff;
+            --purple: #a855f7;
+            --pink: #ec4899;
+        }
+
+        /* Fade-in animation for scroll */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-cyan-purple {
+            background: linear-gradient(135deg, var(--cyan) 0%, var(--purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-cyan-pink {
+            background: linear-gradient(135deg, var(--cyan) 0%, var(--pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Header border effect on scroll */
+        .header-border {
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .header-border.scrolled {
+            border-bottom-color: rgba(107, 114, 128, 0.5);
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Email icon hover effect */
+        .email-icon-wrapper {
+            transition: all 0.3s ease;
+        }
+
+        .email-icon-wrapper:hover svg {
+            color: var(--cyan);
+            transform: scale(1.1);
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+        }
+
+        .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-8px);
+            background-color: rgba(31, 41, 55, 0.95);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .tooltip:hover::after {
+            opacity: 1;
+        }
+
+        /* Mobile menu */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            max-height: 200px;
+        }
+
+        /* Hero Section Radial Gradient Background */
+        .hero-bg {
+            background: radial-gradient(ellipse at 70% 50%, rgba(168, 85, 247, 0.35) 0%, transparent 65%),
+                        radial-gradient(ellipse at 30% 80%, rgba(0, 245, 255, 0.10) 0%, transparent 50%),
+                        var(--bg-dark);
+        }
+
+        /* Profile Image Mask */
+        .profile-image {
+            mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+        }
+
+        /* CTA Button */
+        .btn-cta {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--cyan) 100%);
+            padding: 12px 32px;
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(168, 85, 247, 0.3);
+        }
+
+        /* About Section with Dot Grid */
+        .about-section {
+            position: relative;
+            background-color: var(--bg-about);
+        }
+
+        .dot-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle, rgba(107, 114, 128, 0.3) 1px, transparent 1px);
+            background-size: 30px 30px;
+            pointer-events: none;
+        }
+
+        .about-content {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body class="bg-[#0f0c1e] text-gray-100">
+
+    <!-- Fixed Navigation Header -->
+    <header class="fixed top-0 w-full z-50 header-border">
+        <div class="backdrop-blur-md bg-gray-950/80">
+            <nav class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-center relative">
+                <!-- Logo -->
+                <div class="text-2xl font-bold gradient-text absolute left-6">JK</div>
+
+                <!-- Desktop Menu (Centered) -->
+                <div class="hidden md:flex gap-8">
+                    <a href="#home" class="text-gray-300 hover:text-gray-100 transition text-sm font-medium">HOME</a>
+                    <a href="#about" class="text-gray-300 hover:text-gray-100 transition text-sm font-medium">ABOUT</a>
+                    <a href="#contact" class="text-gray-300 hover:text-gray-100 transition text-sm font-medium">CONTACT</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-gray-300 hover:text-gray-100 absolute right-6" id="mobile-menu-btn">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </nav>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu md:hidden border-t border-gray-800">
+                <div class="px-6 py-4 flex flex-col gap-4">
+                    <a href="#home" class="text-gray-300 hover:text-gray-100 transition">HOME</a>
+                    <a href="#about" class="text-gray-300 hover:text-gray-100 transition">ABOUT</a>
+                    <a href="#contact" class="text-gray-300 hover:text-gray-100 transition">CONTACT</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section (New 2-Column Layout) -->
+    <section id="home" class="hero-bg min-h-screen flex items-center justify-center px-6 pt-20">
+        <div class="max-w-6xl mx-auto w-full">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <!-- Text (Left) -->
+                <div class="fade-in-up">
+                    <div class="text-lg text-gray-300 mb-2">Hi, I'm</div>
+                    <h1 class="text-6xl md:text-7xl font-bold text-white mb-4">JIHOON</h1>
+                    <div class="text-3xl md:text-4xl font-bold mb-8 gradient-cyan-purple">
+                        Software Development Manager.
+                    </div>
+                    <p class="text-gray-400 text-lg leading-relaxed mb-8 max-w-lg">
+                        I'm a Software Development Manager with a passion for building great products and leading high-performing teams.
+                        With experience spanning from hands-on development to team leadership, I blend technical expertise with strategic thinking.
+                    </p>
+                    <a href="#contact" class="btn-cta">Get in Touch</a>
+                </div>
+
+                <!-- Profile Image (Right) -->
+                <div class="flex justify-center fade-in-up" style="animation-delay: 0.1s">
+                    <img src="https://i.pravatar.cc/600?img=52" alt="Jihoon Kim" class="profile-image w-80 h-80 md:w-96 md:h-96 rounded-lg object-cover" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section (Text Only with Dot Grid) -->
+    <section id="about" class="about-section min-h-screen flex items-center justify-center px-6 py-20 relative">
+        <div class="dot-grid"></div>
+        <div class="about-content max-w-4xl mx-auto w-full text-center">
+            <h2 class="text-5xl md:text-6xl font-bold mb-8 fade-in-up gradient-cyan-pink">
+                About
+            </h2>
+
+            <p class="text-gray-300 text-lg leading-relaxed mb-12 fade-in-up" style="animation-delay: 0.1s">
+                I'm a Software Development Manager with a passion for building great products and leading high-performing teams.
+                With experience spanning from hands-on development to team leadership, I blend technical expertise with strategic thinking
+                to drive innovation and deliver excellence.
+            </p>
+
+            <!-- Badges (Centered) -->
+            <div class="flex flex-wrap gap-3 justify-center fade-in-up" style="animation-delay: 0.2s">
+                <span class="px-4 py-2 rounded-full bg-gray-800/50 text-sm font-medium text-emerald-400 border border-emerald-500/30">ISTJ</span>
+                <span class="px-4 py-2 rounded-full bg-gray-800/50 text-sm font-medium text-emerald-400 border border-emerald-500/30">25 years old</span>
+                <span class="px-4 py-2 rounded-full bg-gray-800/50 text-sm font-medium text-emerald-400 border border-emerald-500/30">Server Developer</span>
+                <span class="px-4 py-2 rounded-full bg-gray-800/50 text-sm font-medium text-emerald-400 border border-emerald-500/30">Team Lead</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="min-h-screen flex items-center justify-center px-6 py-20">
+        <div class="max-w-6xl mx-auto w-full text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-12 fade-in-up gradient-cyan-pink">
+                Get in Touch
+            </h2>
+
+            <div class="fade-in-up" style="animation-delay: 0.1s">
+                <a href="mailto:uniggo93@gmail.com" class="email-icon-wrapper tooltip" data-tooltip="Send Email">
+                    <!-- Email Icon from HeroIcons -->
+                    <svg class="w-20 h-20 mx-auto text-cyan-400 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                </a>
+                <p class="text-gray-400 text-sm mt-4">Click the envelope to send me an email</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-6 px-6">
+        <div class="max-w-6xl mx-auto text-center text-gray-500 text-sm">
+            <p>© 2026 JIHOON KIM. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close menu when a link is clicked
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Header border on scroll
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll animation with IntersectionObserver
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.remove('opacity-0');
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in-up elements
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
